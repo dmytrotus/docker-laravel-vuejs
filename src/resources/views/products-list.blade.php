@@ -8,6 +8,13 @@
 </div>
 
 <div class="mb-3 text-center row">
+
+  <div class="col-12">
+    <div id="app">
+      <products-list></products-list>
+    </div>
+  </div>
+
   @foreach($products as $product)
   <div class="card col-md-4 mb-4 shadow-sm p-0 mb-1">
     <div class="card-header">
