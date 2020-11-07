@@ -2,8 +2,9 @@ version: "3.7"
 services:
   app:
     build:
+      dockerfile: ./docker/php/Dockerfile
       args:
-        user: sammy
+        user: dima
         uid: 1000
       context: ./
     image: laravel_8
@@ -36,7 +37,7 @@ services:
     container_name: laravel_8-nginx
     restart: unless-stopped
     ports:
-      - "1234:80"
+      - "4545:80"
     volumes:
       - ./src/:/var/www
       - ./docker/nginx:/etc/nginx/conf.d
