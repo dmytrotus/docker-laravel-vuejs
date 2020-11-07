@@ -1923,10 +1923,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      products: {}
+    };
+  },
+  methods: {
+    getProducts: function getProducts() {
+      var _this = this;
+
+      axios.get('/api/products').then(function (response) {
+        console.log(response.data.data.data);
+        _this.products = response.data.data.data;
+      });
+    }
+  },
+  created: function created() {
+    this.getProducts();
   }
 });
 
@@ -37507,6 +37521,23 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-fragment/dist/vue-fragment.esm.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vue-fragment/dist/vue-fragment.esm.js ***!
+  \************************************************************/
+/*! exports provided: default, Fragment, SSR, Plugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Fragment", function() { return Fragment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SSR", function() { return SSR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Plugin", function() { return Plugin; });
+function _defineProperty(e,n,t){return n in e?Object.defineProperty(e,n,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[n]=t,e}function _objectSpread(e){for(var n=1;n<arguments.length;n++){var t=null!=arguments[n]?arguments[n]:{},r=Object.keys(t);"function"==typeof Object.getOwnPropertySymbols&&(r=r.concat(Object.getOwnPropertySymbols(t).filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),r.forEach(function(n){_defineProperty(e,n,t[n])})}return e}var freeze=function(e,n,t){Object.defineProperty(e,n,{configurable:!0,get:function(){return t},set:function(e){console.warn("tried to set frozen property ".concat(n," with ").concat(e))}})},unfreeze=function(e,n){var t=arguments.length>2&&void 0!==arguments[2]?arguments[2]:null;Object.defineProperty(e,n,{configurable:!0,writable:!0,value:t})},component={abstract:!0,name:"Fragment",props:{name:{type:String,default:function(){return Math.floor(Date.now()*Math.random()).toString(16)}}},mounted:function(){var e=this.$el,n=e.parentNode,t=document.createComment("fragment#".concat(this.name,"#head")),r=document.createComment("fragment#".concat(this.name,"#tail"));n.insertBefore(t,e),n.insertBefore(r,e),e.appendChild=function(t){n.insertBefore(t,r),freeze(t,"parentNode",e)},e.insertBefore=function(t,r){n.insertBefore(t,r),freeze(t,"parentNode",e)},e.removeChild=function(e){n.removeChild(e),unfreeze(e,"parentNode")},Array.from(e.childNodes).forEach(function(n){return e.appendChild(n)}),n.removeChild(e),freeze(e,"parentNode",n),freeze(e,"nextSibling",r.nextSibling);var o=n.insertBefore;n.insertBefore=function(r,i){o.call(n,r,i!==e?i:t)};var i=n.removeChild;n.removeChild=function(a){if(a===e){for(;t.nextSibling!==r;)e.removeChild(t.nextSibling);n.removeChild(t),n.removeChild(r),unfreeze(e,"parentNode"),n.insertBefore=o,n.removeChild=i}else i.call(n,a)}},render:function(e){var n=this,t=this.$slots.default;return t&&t.length&&t.forEach(function(e){return e.data=_objectSpread({},e.data,{attrs:_objectSpread({fragment:n.name},(e.data||{}).attrs)})}),e("div",{attrs:{fragment:this.name}},t)}};function ssr(e,n){ true&&console.warn("v-fragment SSR is not implemented yet.")}var Fragment=component,SSR=ssr,Plugin={install:function(e){e.component("fragment",component)}},index={Fragment:component,Plugin:Plugin,SSR:ssr};/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductsList.vue?vue&type=template&id=1d3d91e6&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductsList.vue?vue&type=template&id=1d3d91e6& ***!
@@ -37522,32 +37553,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Products Component")
+  return _c(
+    "fragment",
+    _vm._l(_vm.products, function(product) {
+      return _c(
+        "div",
+        {
+          key: product.id,
+          staticClass: "card col-md-4 mb-4 shadow-sm p-0 mb-1"
+        },
+        [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "my-0 font-weight-normal" }, [
+              _vm._v(_vm._s(product.title))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("h3", [_vm._v("Product ID: " + _vm._s(product.id))]),
+            _vm._v(" "),
+            _c("h1", { staticClass: "card-title pricing-card-title" }, [
+              _vm._v("$" + _vm._s(product.price.price))
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an Products component.\n                "
-              )
-            ])
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-block btn-outline-primary",
+                attrs: { type: "button" }
+              },
+              [_vm._v("Buy")]
+            )
           ])
-        ])
-      ])
-    ])
-  }
-]
+        ]
+      )
+    }),
+    0
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49720,9 +49764,12 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_fragment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-fragment */ "./node_modules/vue-fragment/dist/vue-fragment.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49747,6 +49794,10 @@ Vue.component('products-list', __webpack_require__(/*! ./components/ProductsList
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+///use the plugin fragment
+
+
+Vue.use(vue_fragment__WEBPACK_IMPORTED_MODULE_0__["default"].Plugin); ///use the plugin fragment
 
 var app = new Vue({
   el: '#app'

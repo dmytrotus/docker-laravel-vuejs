@@ -14,4 +14,18 @@ class ProductController extends Controller
     	return view('products-list')
     	->with(compact('products'));
     }
+
+    public function indexjson(){
+
+    	$products = Product::paginate(25);
+
+    	foreach ($products as $product) {
+    		$product->price = $product->price;
+    	}
+
+    	return response()->json([
+    		'success' => true,
+    		'data' => $products
+    	], 200);
+    }
 }

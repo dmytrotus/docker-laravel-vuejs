@@ -27,6 +27,11 @@ Vue.component('products-list', require('./components/ProductsList.vue').default)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+///use the plugin fragment
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin);
+///use the plugin fragment
+
 const app = new Vue({
     el: '#app',
 });
