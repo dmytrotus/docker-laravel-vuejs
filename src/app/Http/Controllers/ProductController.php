@@ -11,6 +11,7 @@ class ProductController extends Controller
 
     	$products = Product::paginate(25);
 
-    	dd($products);
+    	return view('products-list')
+    	->with(compact('products'));
     }
 }
