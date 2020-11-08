@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/products', 'ProductController@indexjson');
+Route::post('/products', 'ProductController@searchjson');

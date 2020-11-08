@@ -24,13 +24,15 @@
             getProducts(){
                 axios.get('/api/products')
                      .then((response)=>{
-                        console.log(response.data.data.data)
+                        //console.log(response.data.data.data)
                        this.products = response.data.data.data
                      })
             }
         },
-        created() {
+        mounted() {
             this.getProducts()
-        }
+            //console.log(this.data)
+        },
+        props: ['data']
     }
 </script>

@@ -28,4 +28,18 @@ class ProductController extends Controller
     		'data' => $products
     	], 200);
     }
+
+    public function searchjson( Request $r ){
+
+        $products = Product::where('title', 'LIKE', "%{$r->searchphrase}%")->paginate(25);
+
+        foreach ($products as $product) {
+            $product->price = $product->price;
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ], 200);
+    }
 }
