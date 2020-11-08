@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<ProductsSearch
-		@new-products="products" />
+		@searchphrase="searchProducts" />
 		<div class="mb-3 text-center row">
 		  <ProductsList
-		  data="produsscts"
+		  v-bind:products="products"
 		  />
 		</div>
 	</div>
@@ -20,9 +20,28 @@ export default {
 		    ProductsList
 		},
 		methods: {
-			products(products) {
-				console.log(products)
-			}
-		}
+			searchProducts(searchphrase){
+              axios.post('/api/products', {searchphrase: searchphrase})
+                     .then((response)=>{
+                     	//console.log(response.data.data.data)
+                        this.products = response.data.data.data
+                     })
+            },
+            getProducts(){
+                axios.get('/api/products')
+                     .then((response)=>{
+                        //console.log(response.data.data.data)
+                       this.products = response.data.data.data
+                     })
+            }
+		},
+		data() {
+            return {
+              products: {},
+            }
+        },
+        mounted() {
+        	this.getProducts();
+        }
     }
 </script>

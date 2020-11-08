@@ -1,6 +1,6 @@
 <template>
     <fragment>
-      <div v-for="product in products" :key="product.id" class="card col-md-4 mb-4 shadow-sm p-0 mb-1">
+      <div v-bind:products="products" v-for="product in products" :key="product.id" class="card col-md-4 mb-4 shadow-sm p-0 mb-1">
         <div class="card-header">
           <h4 class="my-0 font-weight-normal">{{ product.title }}</h4>
         </div>
@@ -15,24 +15,6 @@
 
 <script>
     export default {
-        data() {
-            return {
-              products: {},
-            }
-        },
-        methods: {
-            getProducts(){
-                axios.get('/api/products')
-                     .then((response)=>{
-                        //console.log(response.data.data.data)
-                       this.products = response.data.data.data
-                     })
-            }
-        },
-        mounted() {
-            this.getProducts()
-            //console.log(this.data)
-        },
-        props: ['data']
+        props: ['products']
     }
 </script>

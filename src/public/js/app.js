@@ -1930,9 +1930,32 @@ __webpack_require__.r(__webpack_exports__);
     ProductsList: _ProductsList__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
-    products: function products(_products) {
-      console.log(_products);
+    searchProducts: function searchProducts(searchphrase) {
+      var _this = this;
+
+      axios.post('/api/products', {
+        searchphrase: searchphrase
+      }).then(function (response) {
+        //console.log(response.data.data.data)
+        _this.products = response.data.data.data;
+      });
+    },
+    getProducts: function getProducts() {
+      var _this2 = this;
+
+      axios.get('/api/products').then(function (response) {
+        //console.log(response.data.data.data)
+        _this2.products = response.data.data.data;
+      });
     }
+  },
+  data: function data() {
+    return {
+      products: {}
+    };
+  },
+  mounted: function mounted() {
+    this.getProducts();
   }
 });
 
@@ -1963,25 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      products: {}
-    };
-  },
-  methods: {
-    getProducts: function getProducts() {
-      var _this = this;
-
-      axios.get('/api/products').then(function (response) {
-        //console.log(response.data.data.data)
-        _this.products = response.data.data.data;
-      });
-    }
-  },
-  mounted: function mounted() {
-    this.getProducts(); //console.log(this.data)
-  },
-  props: ['data']
+  props: ['products']
 });
 
 /***/ }),
@@ -2010,17 +2015,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onSubmit: function onSubmit() {
       //console.log(this.searchphrase)
-      this.getProducts({
-        searchphrase: this.searchphrase
-      });
-    },
-    getProducts: function getProducts(data) {
-      var _this = this;
-
-      axios.post('/api/products', data).then(function (response) {
-        //console.log(response.data.data.data)
-        _this.$emit('new-products', response.data.data.data);
-      });
+      //this.$emit('searchProducts', searchProducts({searchphrase: this.searchphrase}));
+      this.$emit('searchphrase', this.searchphrase);
     }
   },
   data: function data() {
@@ -37642,12 +37638,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("ProductsSearch", { on: { "new-products": _vm.products } }),
+      _c("ProductsSearch", { on: { searchphrase: _vm.searchProducts } }),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "mb-3 text-center row" },
-        [_c("ProductsList", { attrs: { data: "produsscts" } })],
+        [_c("ProductsList", { attrs: { products: _vm.products } })],
         1
       )
     ],
@@ -37683,7 +37679,8 @@ var render = function() {
         "div",
         {
           key: product.id,
-          staticClass: "card col-md-4 mb-4 shadow-sm p-0 mb-1"
+          staticClass: "card col-md-4 mb-4 shadow-sm p-0 mb-1",
+          attrs: { products: _vm.products }
         },
         [
           _c("div", { staticClass: "card-header" }, [

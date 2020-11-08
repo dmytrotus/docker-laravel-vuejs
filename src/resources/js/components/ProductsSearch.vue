@@ -14,16 +14,10 @@ export default {
 	methods: {
 		onSubmit() {
 			//console.log(this.searchphrase)
-			this.getProducts({searchphrase: this.searchphrase})
-		},
+			//this.$emit('searchProducts', searchProducts({searchphrase: this.searchphrase}));
 
-		getProducts(data){
-	            axios.post('/api/products', data)
-		                 .then((response)=>{
-		                    //console.log(response.data.data.data)
-		                   this.$emit('new-products', response.data.data.data);
-		                 })
-	        }
+			this.$emit('searchphrase', this.searchphrase);
+		}
 	},
 	data() {
 		return {
